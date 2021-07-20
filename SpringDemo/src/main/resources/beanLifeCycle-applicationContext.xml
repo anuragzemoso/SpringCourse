@@ -7,22 +7,16 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- load the properties file: sport.properties -->
-    <context:property-placeholder location="classpath:sport.properties"/>
-
     <bean id="myFortuneService"
           class="HappyFortuneService">
     </bean>
 
     <bean id="myCoach"
-          class="TrackCoach">
+          class="TrackCoach"
+          init-method="doMyStartupStuff"
+    destroy-method="doMyCleanupStuff">
+
         <constructor-arg ref="myFortuneService"/>
     </bean>
 
-    <bean id="myCricketCoach"
-          class="CricketCoach">
-        <property name="fortuneService" ref="myFortuneService"/>
-        <property name="emailAddress" value="${foo.email}"/>
-        <property name="team" value="${foo.team}"/>
-    </bean>
 </beans>
